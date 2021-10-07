@@ -67,6 +67,31 @@ namespace WebAPINorthwind_1.Controllers
             guncellenecek.Description = item.Description;
             _db.SaveChanges();
             return ListCategories();
+
+            /*
+             CategoryDTO
+
+            CategoryDTO guncellenen = new CategoryDTO();
+            guncellenen.Name = guncellenecek.CategoryName;
+
+            return guncellenen;
+             
+             
+             
+             */
+        }
+
+
+
+        [HttpGet]
+        public List<CategoryDTO> SearchCategory(string item)
+        {
+            return _db.Categories.Where(x => x.CategoryName.Contains(item)).Select(x => new CategoryDTO
+            {
+                ID = x.CategoryID,
+                Name = x.CategoryName,
+                Description = x.Description
+            }).ToList();
         }
     }
 }
